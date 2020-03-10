@@ -14,12 +14,14 @@ namespace DataLoader
     {
         static async Task Main(string[] args)
         {
-            using (var http = new HttpClient())
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+            using (var http = new HttpClient(handler))
             using (var reader = new StreamReader("games.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var gameRecords = csv.GetRecords<GameRecord>();
-                //  Console.WriteLine("{0} game(s) found", gameRecords.Count());
 
                 var sent = 0;
                 foreach (var gameRecord in gameRecords)
@@ -41,6 +43,7 @@ namespace DataLoader
                     catch (Exception ex)
                     {
                         Console.Error.WriteLine(ex.Message);
+                        Console.Error.WriteLine(ex.InnerException?.Message);
                     }
                 }
 
@@ -52,13 +55,14 @@ namespace DataLoader
     class GameRecord
     {
         public Guid? GameId { set; get; }
+        public string Name { set; get; }
         public string Title { set; get; }
         public string Genre { set; get; }
         public string Modes { set; get; }
         public string Series { set; get; }
         public string Developer { set; get; }
         public string Publisher { set; get; }
-        public int? Release { set; get; }
+        public int? Year { set; get; }
         public string MVS { set; get; }
         public string AES { set; get; }
         public string CD { set; get; }

@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using AutoMapper;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Serilog;
 using TheNeoGeoArchive.Infrastructure.Dapper.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Infrastructure.Migrations.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Persistence.Extensions.DependencyInjection;
+using TheNeoGeoArchive.WebApi.DependencyInjection;
 
 namespace TheNeoGeoArchive.WebApi
 {
@@ -28,7 +30,16 @@ namespace TheNeoGeoArchive.WebApi
                .ReadFrom.Configuration(Configuration)
                .CreateLogger();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
+
+            services.AddOpenApi();
+            services.AddVersioning();
+
+            services.AddApiVersioning();
 
             var connectionString = Configuration.GetConnectionString("Default");
 
@@ -59,6 +70,9 @@ namespace TheNeoGeoArchive.WebApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 

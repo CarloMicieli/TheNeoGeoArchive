@@ -24,15 +24,22 @@ namespace TheNeoGeoArchive.Infrastructure.Migrations
 
             Create.Table(Games)
                 .WithColumn("game_id").AsGuid().PrimaryKey()
+                .WithColumn("name").AsString(25).NotNullable()
                 .WithColumn("title").AsString(100).NotNullable()
                 .WithColumn("genre").AsString(50).NotNullable()
                 .WithColumn("modes").AsString(50).NotNullable()
                 .WithColumn("series").AsString(100).Nullable()
                 .WithColumn("developer").AsString(100).Nullable()
                 .WithColumn("publisher").AsString(100).Nullable()
-                .WithColumn("release").AsInt32().Nullable()
-                .WithColumn("created_at").AsDateTime().Nullable()
-                .WithColumn("version").AsInt32().WithDefaultValue(1);
+                .WithColumn("year").AsInt32().Nullable()
+                .WithColumn("release_mvs").AsDateTime().Nullable()
+                .WithColumn("release_aes").AsDateTime().Nullable()
+                .WithColumn("release_cd").AsDateTime().Nullable();
+
+            Create.Index("IX_Games_Name")
+                .OnTable(Games)
+                .OnColumn("name")
+                .Unique();
         }
 
         public override void Down()

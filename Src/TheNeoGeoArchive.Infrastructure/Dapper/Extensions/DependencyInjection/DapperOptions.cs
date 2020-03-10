@@ -42,9 +42,9 @@ namespace TheNeoGeoArchive.Infrastructure.Dapper.Extensions.DependencyInjection
 
         internal List<Assembly> Assemblies
         {
-            get 
-            { 
-                return assemblies; 
+            get
+            {
+                return assemblies;
             }
         }
 

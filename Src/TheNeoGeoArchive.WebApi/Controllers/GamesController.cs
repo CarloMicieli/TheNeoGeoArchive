@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheNeoGeoArchive.Persistence.Domain;
 using TheNeoGeoArchive.Persistence.Repositories;
@@ -9,8 +10,9 @@ using TheNeoGeoArchive.WebApi.ViewModels;
 
 namespace TheNeoGeoArchive.WebApi.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public sealed class GamesController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -22,7 +24,10 @@ namespace TheNeoGeoArchive.WebApi.Controllers
             _repo = repo;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
+        [ProducesResponseType(typeof(GameViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetGameById(Guid id)
         {
             var game = await _repo.GetGameById(id);
@@ -33,7 +38,24 @@ namespace TheNeoGeoArchive.WebApi.Controllers
             return Ok(viewModel);
         }
 
+        [HttpGet("{name}")]
+        [ProducesResponseType(typeof(GameViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetGameByName(string name)
+        {
+            var game = await _repo.GetGameByName(name);
+            if (game is null)
+                return NotFound();
+
+            var viewModel = _mapper.Map<GameViewModel>(game);
+            return Ok(viewModel);
+        }
+
         [HttpGet]
+        [ProducesResponseType(typeof(GameViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllGames()
         {
             var games = await _repo.GetAll();

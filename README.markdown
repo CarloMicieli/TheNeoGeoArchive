@@ -14,6 +14,10 @@ $ dotnet run
 
 ## The web api
 
+```
+$ dotnet run --project Src/TheNeoGeoArchive.WebApi
+```
+
 Todo
 
 - `POST api/games`: to insert a new game

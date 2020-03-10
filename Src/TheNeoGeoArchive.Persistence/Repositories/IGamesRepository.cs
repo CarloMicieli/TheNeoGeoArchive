@@ -7,7 +7,9 @@ namespace TheNeoGeoArchive.Persistence.Repositories
 {
     public interface IGamesRepository
     {
-         Task<Game> GetGameById(Guid gameId);
+        Task<Game> GetGameById(Guid gameId);
+
+        Task<Game?> GetGameByName(string name);
 
         Task<IEnumerable<Game>> GetAll();
 

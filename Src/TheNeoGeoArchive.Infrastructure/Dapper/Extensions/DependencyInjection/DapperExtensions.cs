@@ -7,7 +7,7 @@ using static Dapper.SqlMapper;
 
 namespace TheNeoGeoArchive.Infrastructure.Dapper.Extensions.DependencyInjection
 {
-public static class DapperExtensions
+    public static class DapperExtensions
     {
         public static IServiceCollection ReplaceDapper(this IServiceCollection services, Action<DapperOptions> action)
         {

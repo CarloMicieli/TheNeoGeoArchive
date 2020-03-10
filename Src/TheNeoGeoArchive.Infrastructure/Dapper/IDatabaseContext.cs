@@ -4,6 +4,6 @@ namespace TheNeoGeoArchive.Infrastructure.Dapper
 {
     public interface IDatabaseContext
     {
-         DbConnection NewConnection();
+        DbConnection NewConnection();
     }
 }

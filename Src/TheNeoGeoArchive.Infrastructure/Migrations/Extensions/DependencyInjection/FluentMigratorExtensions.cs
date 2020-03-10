@@ -17,7 +17,7 @@ namespace TheNeoGeoArchive.Infrastructure.Migrations.Extensions.DependencyInject
             {
                 services.Remove(descriptor);
             }
-          
+
             return AddMigrations(services, options);
         }
 
