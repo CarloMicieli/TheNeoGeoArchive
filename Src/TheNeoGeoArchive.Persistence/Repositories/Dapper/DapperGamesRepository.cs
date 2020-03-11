@@ -23,7 +23,21 @@ namespace TheNeoGeoArchive.Persistence.Repositories.Dapper
             {
                 await connection.OpenAsync();
 
-                var _ = await connection.ExecuteAsync(InsertCmdText, game);
+                var _ = await connection.ExecuteAsync(InsertCmdText, new
+                {
+                    GameId = game.GameId,
+                    Name = game.Name,
+                    Title = game.Title,
+                    Genre = game.Genre,
+                    Modes = game.Modes,
+                    Series = game.Series,
+                    Developer = game.Developer,
+                    Publisher = game.Publisher,
+                    Year = game.Year,
+                    ReleaseMvs = game.Release?.Mvs,
+                    ReleaseAes = game.Release?.Aes,
+                    ReleaseCd = game.Release?.Cd
+                });
                 return game.GameId;
             }
         }
@@ -33,7 +47,8 @@ namespace TheNeoGeoArchive.Persistence.Repositories.Dapper
             await using (var connection = _dbContext.NewConnection())
             {
                 await connection.OpenAsync();
-                return await connection.QueryAsync<Game>(SelectQueryText, new { });
+                var results = await connection.QueryAsync<GamesDto>(SelectQueryText, new { });
+                return results.Select(dto => NewGameFromDto(dto));
             }
         }
 
@@ -58,37 +73,40 @@ namespace TheNeoGeoArchive.Persistence.Repositories.Dapper
                 }
                 else
                 {
-                    return new Game
-                    {
-                        GameId = result.game_id,
-                        Name = result.name,
-                        Developer = result.developer,
-                        Genre = result.genre,
-                        Modes = result.modes,
-                        Publisher = result.publisher,
-                        Series = result.series,
-                        Title = result.title,
-                        Year = result.year,
-                        Release = new Release
-                        {
-                            Aes = result.release_aes,
-                            Mvs = result.release_mvs,
-                            Cd = result.release_cd
-                        }
-                    };
+                    return NewGameFromDto(result);
                 }
             }
+        }
+
+        private Game NewGameFromDto(GamesDto dto)
+        {
+            return new Game
+            {
+                GameId = dto.game_id,
+                Name = dto.name,
+                Developer = dto.developer,
+                Genre = dto.genre,
+                Modes = dto.modes,
+                Publisher = dto.publisher,
+                Series = dto.series,
+                Title = dto.title,
+                Year = dto.year,
+                Release = new Release
+                {
+                    Aes = dto.release_aes,
+                    Mvs = dto.release_mvs,
+                    Cd = dto.release_cd
+                }
+            };
         }
 
         #region [ Command Text ]
 
         private const string InsertCmdText = @"INSERT INTO games(
 	            game_id, name, title, genre, modes, series, developer, publisher, year, release_mvs, release_aes, release_cd)
-            VALUES(@GameId, @Name, @Title, @Genre, @Modes, @Series, @Developer, @Publisher, @Year, null, null, null);";
+            VALUES(@GameId, @Name, @Title, @Genre, @Modes, @Series, @Developer, @Publisher, @Year, @ReleaseMvs, @ReleaseAes, @ReleaseCd);";
 
-        private const string SelectQueryText = @"SELECT
-	            game_id as GameId, name, title, genre, modes, series, developer, publisher, year, release_mvs, release_aes, release_cd
-            FROM games;";
+        private const string SelectQueryText = @"SELECT * FROM games;";
 
         private const string SelectOneQueryText = @"SELECT
 	            game_id as GameId, name, title, genre, modes, series, developer, publisher, year, release_mvs, release_aes, release_cd

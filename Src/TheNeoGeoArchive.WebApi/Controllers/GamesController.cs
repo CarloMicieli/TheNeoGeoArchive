@@ -63,6 +63,8 @@ namespace TheNeoGeoArchive.WebApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateNewGame(GameViewModel newGame)
         {
             var game = _mapper.Map<Game>(newGame);
