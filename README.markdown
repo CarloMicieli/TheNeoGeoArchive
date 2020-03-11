@@ -18,6 +18,8 @@ $ dotnet run
 $ dotnet run --project Src/TheNeoGeoArchive.WebApi
 ```
 
+To see the OpenApi document go to [https://localhost:5001/swagger](https://localhost:5001/swagger).
+
 Todo
 
 - `POST api/games`: to insert a new game
