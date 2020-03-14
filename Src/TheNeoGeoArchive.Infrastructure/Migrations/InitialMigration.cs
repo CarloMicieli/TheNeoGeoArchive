@@ -12,15 +12,26 @@ namespace TheNeoGeoArchive.Infrastructure.Migrations
         {
             Create.Table(Platforms)
                 .WithColumn("platform_id").AsGuid().PrimaryKey()
-                .WithColumn("name").AsString(25).NotNullable()
+                .WithColumn("name").AsString(50).NotNullable()
+                .WithColumn("slug").AsString(50).NotNullable()
                 .WithColumn("manufacturer").AsString(50).NotNullable()
                 .WithColumn("generation").AsInt32().Nullable()
-                .WithColumn("released_at").AsDateTime().Nullable()
-                .WithColumn("discontinued").AsDateTime().Nullable()
+                .WithColumn("platform_type").AsString(50).NotNullable()
+                .WithColumn("released_jp").AsDateTime().Nullable()
+                .WithColumn("released_eu").AsDateTime().Nullable()
+                .WithColumn("released_na").AsDateTime().Nullable()
+                .WithColumn("discontinued").AsInt32().Nullable()
                 .WithColumn("introductory_price").AsDecimal().Nullable()
                 .WithColumn("units_sold").AsInt32().Nullable()
-                .WithColumn("created_at").AsDateTime().Nullable()
-                .WithColumn("version").AsInt32().WithDefaultValue(1);
+                .WithColumn("media").AsString(50).Nullable()
+                .WithColumn("cpu").AsString(250).Nullable()
+                .WithColumn("memory").AsString(250).Nullable()
+                .WithColumn("display").AsString(250).Nullable();
+
+            Create.Index("IX_Platforms_Slug")
+                .OnTable(Platforms)
+                .OnColumn("slug")
+                .Unique();
 
             Create.Table(Games)
                 .WithColumn("game_id").AsGuid().PrimaryKey()

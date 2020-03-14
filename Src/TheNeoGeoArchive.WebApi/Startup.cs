@@ -48,15 +48,13 @@ namespace TheNeoGeoArchive.WebApi
 
             services.AddDapper(options =>
             {
-                options.UseSqlite("Data Source=test.db");
-                //options.UsePostgres(connectionString);
+                options.UsePostgres(connectionString);
                 options.ScanTypeHandlersIn(typeof(GuidTypeHandler).Assembly);
             });
 
             services.AddMigrations(options =>
             {
-                options.UseSqlite("Data Source=test.db");
-                //options.UsePostgres(connectionString);
+                options.UsePostgres(connectionString);
             });
 
             services.AddRepositories();

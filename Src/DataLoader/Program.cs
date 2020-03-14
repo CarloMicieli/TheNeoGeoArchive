@@ -12,10 +12,12 @@ namespace DataLoader
     {
         static async Task Main(string[] args)
         {
-            var gameRecords = LoadRecords<GameRecord>("games.csv");
             var apiClient = new WebApiClient();
-
+            var gameRecords = LoadRecords<GameRecord>("games.csv");
+            var platformRecords = LoadRecords<PlatformRecord>("platforms.csv");
+            
             await apiClient.SendGames(gameRecords);
+            await apiClient.SendPlatforms(platformRecords);
         }
 
         static IEnumerable<TRecord> LoadRecords<TRecord>(string filename)

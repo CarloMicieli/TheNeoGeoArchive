@@ -10,10 +10,13 @@ namespace TheNeoGeoArchive.WebApi
         {
             CreateMap<GameViewModel, Game>();
             CreateMap<Game, GameViewModel>();
-            CreateMap<PlatformViewModel, Platform>();
-            CreateMap<Platform, PlatformViewModel>();
             CreateMap<Release, ReleaseViewModel>();
             CreateMap<ReleaseViewModel, Release>();
+
+            CreateMap<PlatformViewModel, Platform>();
+            CreateMap<Platform, PlatformViewModel>();
+            CreateMap<PlatformRelease, PlatformReleaseViewModel>();
+            CreateMap<PlatformReleaseViewModel, PlatformRelease>();
         }
     }
 }

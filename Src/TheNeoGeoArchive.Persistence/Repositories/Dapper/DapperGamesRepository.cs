@@ -25,15 +25,15 @@ namespace TheNeoGeoArchive.Persistence.Repositories.Dapper
 
                 var _ = await connection.ExecuteAsync(InsertCmdText, new
                 {
-                    GameId = game.GameId,
-                    Name = game.Name,
-                    Title = game.Title,
-                    Genre = game.Genre,
-                    Modes = game.Modes,
-                    Series = game.Series,
-                    Developer = game.Developer,
-                    Publisher = game.Publisher,
-                    Year = game.Year,
+                    game.GameId,
+                    game.Name,
+                    game.Title,
+                    game.Genre,
+                    game.Modes,
+                    game.Series,
+                    game.Developer,
+                    game.Publisher,
+                    game.Year,
                     ReleaseMvs = game.Release?.Mvs,
                     ReleaseAes = game.Release?.Aes,
                     ReleaseCd = game.Release?.Cd
