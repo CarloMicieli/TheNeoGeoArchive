@@ -2,10 +2,18 @@ syntax = "proto3";
 
 option csharp_namespace = "TheNeoGeoArchive.GrpcServices";
 
-package games;
+package TheNeoGeoArchive;
 
 service Games {
   rpc CreateGame (CreateGameRequest) returns (CreateGameReply);
+  rpc GetGameByName (GetGameByNameRequest) returns (GameInfo);
+  rpc GetGames (GetGamesRequest) returns (stream GameInfo);
+}
+
+message GameRelease {
+  int64 mvs = 1;
+  int64 aes = 2;
+  int64 cd = 3;
 }
 
 message CreateGameRequest {
@@ -18,14 +26,28 @@ message CreateGameRequest {
   string developer = 7;
   string publisher = 8;
   int32 year = 9;
-  message Release {
-      int64 mvs = 1;
-      int64 aes = 2;
-      int64 cd = 3;
-  }
-  Release relase = 10;
+  GameRelease relase = 10;
 }
 
 message CreateGameReply {
   string newId = 1;
+}
+
+message GetGameByNameRequest {
+  string name = 1;
+}
+
+message GetGamesRequest {}
+
+message GameInfo {
+  string gameId = 1;
+  string name = 2;
+  string title = 3;
+  string genre = 4;
+  string modes = 5;
+  string series = 6;
+  string developer = 7;
+  string publisher = 8;
+  int32 year = 9;
+  GameRelease release = 10;
 }

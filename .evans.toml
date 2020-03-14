@@ -1,0 +1,4 @@
+[default]
+protoFile = ["Src/TheNeoGeoArchive.GrpcServices/Protos/games.proto"]
+package = "TheNeoGeoArchive"
+service = "Games"

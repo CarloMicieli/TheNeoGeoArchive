@@ -18,6 +18,30 @@ namespace TheNeoGeoArchive.GrpcServices.Services
             _repo = repo;
         }
 
+        public override async Task GetGames(GetGamesRequest request, IServerStreamWriter<GameInfo> responseStream, ServerCallContext context)
+        {
+            _logger.LogInformation("Get all games");
+
+            var games = await _repo.GetAll();
+            foreach (var game in games)
+            {
+                await responseStream.WriteAsync(FromGame(game));
+            }
+        }
+
+        public override async Task<GameInfo> GetGameByName(GetGameByNameRequest request, ServerCallContext context)
+        {
+            _logger.LogInformation("Get game {Name} info", request.Name);
+
+            var game = await _repo.GetGameByName(request.Name);
+            if (game is null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, "Not found"));
+            }
+
+            return FromGame(game);
+        }
+
         public override async Task<CreateGameReply> CreateGame(CreateGameRequest request, ServerCallContext context)
         {
             _logger.LogInformation("Create new game {Name}", request.Name);
@@ -44,6 +68,27 @@ namespace TheNeoGeoArchive.GrpcServices.Services
             return new CreateGameReply
             {
                 NewId = newId.ToString()
+            };
+        }
+    
+    
+        private static GameInfo FromGame(Game game)
+        {
+            return new GameInfo {
+                GameId = game.GameId.ToString(),
+                Name = game.Name,
+                Title = game.Title,
+                Modes = game.Modes,
+                Publisher = game.Publisher,
+                Developer = game.Developer,
+                Genre = game.Genre,
+                Series = game.Series,
+                Year = game.Year ?? 0,
+                Release = new GameRelease {
+                    Aes = game.Release?.Aes?.Ticks ?? 0,
+                    Mvs = game.Release?.Mvs?.Ticks ?? 0,
+                    Cd = game.Release?.Cd?.Ticks ?? 0
+                }
             };
         }
     }

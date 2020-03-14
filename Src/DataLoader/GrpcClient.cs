@@ -32,7 +32,7 @@ namespace DataLoader
                     Series = gameRecord.Series,
                     Title = gameRecord.Title,
                     Year = gameRecord.Year ?? 1900,
-                    Relase = new CreateGameRequest.Types.Release 
+                    Relase = new GameRelease
                     {
                         Mvs = gameRecord.MVSDateTime()?.Ticks ?? 0,
                         Aes = gameRecord.AESDateTime()?.Ticks ?? 0,

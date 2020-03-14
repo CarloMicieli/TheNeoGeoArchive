@@ -1,5 +1,7 @@
 # TheNeoGeoArchive
 
+![Neo Geo](logo.png)
+
 A playground application ".NET core all the things" - a tribute/archive to the best gaming console of all time.
 
 The normal application is using Postgres, while tests are running against a Sqlite database.
@@ -111,7 +113,7 @@ $ dotnet run --project Src/TheNeoGeoArchive.GrpcServices
 To have a nice CLI tool, install [Evans](https://github.com/ktr0731/evans/releases).
 
 ```
-$ evans repl Src/TheNeoGeoArchive.GrpcServices/Protos/games.proto 
+$ evans -p 5001
 
   ______
  |  ____|
@@ -123,24 +125,24 @@ $ evans repl Src/TheNeoGeoArchive.GrpcServices/Protos/games.proto
  more expressive universal gRPC client
 
 
-games.Games@127.0.0.1:50051>
+games.Games@127.0.0.1:5001>
 ```
 
 ```
-games.Games@127.0.0.1:50051> package games
-
-games.Games@127.0.0.1:50051> show api
-+------------+-------------------+-----------------+
-|    RPC     |   REQUEST TYPE    |  RESPONSE TYPE  |
-+------------+-------------------+-----------------+
-| CreateGame | CreateGameRequest | CreateGameReply |
-+------------+-------------------+-----------------+
+games.Games@127.0.0.1:5001> show api
++---------------+----------------------+-----------------+
+|      RPC      |     REQUEST TYPE     |  RESPONSE TYPE  |
++---------------+----------------------+-----------------+
+| CreateGame    | CreateGameRequest    | CreateGameReply |
+| GetGameByName | GetGameByNameRequest | GameInfo        |
+| GetGames      | GetGamesRequest      | GameInfo        |
++---------------+----------------------+-----------------+
 ```
 
 ```
-games.Games@127.0.0.1:50051> service Games
+games.Games@127.0.0.1:5001> service Games
 
-games.Games@127.0.0.1:50051> call CreateGame
+games.Games@127.0.0.1:5001> call CreateGame
 gameId (TYPE_STRING) => 
 ```
 
