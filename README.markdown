@@ -29,7 +29,7 @@ The main web api is for Neo Geo games:
 - `POST https://localhost:5001/api/v1/games`: to insert a new game
 
 ```javascript
-  {
+{
     "gameId": "b0b576da-9ede-4d39-8a21-1970988af58c",
     "name": "fatfury1",
     "title": "Fatal Fury: King of Fighters",
@@ -40,11 +40,11 @@ The main web api is for Neo Geo games:
     "publisher": "SNK",
     "year": 1991,
     "release": {
-      "mvs": "1991-11-25T00:00:00",
-      "aes": "1991-12-20T00:00:00",
-      "cd": "1994-09-09T00:00:00"
+        "mvs": "1991-11-25T00:00:00",
+        "aes": "1991-12-20T00:00:00",
+        "cd": "1994-09-09T00:00:00"
     }
-  }
+}
 ```
 
 - `GET https://localhost:5001/api/v1/games`: returns all games
@@ -52,6 +52,36 @@ The main web api is for Neo Geo games:
 - `GET https://localhost:5001/api/v1/games/id/:id`: return the game with the `:id` identifier
 
 - `POST api/games/:name/port`: to insert a new game port (to a different platform)
+
+### Platforms
+
+- `POST https://localhost:5001/api/v1/platforms`: to insert a new platform
+
+```javascript
+{
+    "platformId": "c101d369-cf37-4850-87ec-9866be46f812",
+    "name": "Neo Geo AES",
+    "slug": "neogeo",
+    "manufacturer": "SNK Corporation",
+    "generation": 4,
+    "type": "Home video game console",
+    "release": {
+        "japan": "1990-04-26T00:00:00",
+        "northAmerica": "1990-08-22T00:00:00",
+        "europe": "1991-01-01T00:00:00"
+    },
+    "discontinued": 1997,
+    "introductoryPrice": 64999.00000,
+    "unitsSold": 1000000,
+    "media": "ROM cartridge",
+    "cpu": "Motorola 68000 @ 12MHz, Zilog Z80A @ 4MHz",
+    "memory": "64KB RAM, 84KB VRAM, 2KB Sound Memory",
+    "display": "320×224 resolution, 4096 on-screen colors out of a palette of 65536"
+}
+```
+
+- `GET https://localhost:5001/api/v1/platforms`: returns all platforms
+- `GET https://localhost:5001/api/v1/platforms/:slug`: return the platform with the `:slug` value
 
 ## gRPC
 
