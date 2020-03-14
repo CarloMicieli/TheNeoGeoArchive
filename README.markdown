@@ -1,4 +1,5 @@
 # TheNeoGeoArchive
+![.NET Core](https://github.com/CarloMicieli/TheNeoGeoArchive/workflows/.NET%20Core/badge.svg)
 
 ![Neo Geo](logo.png)
 
