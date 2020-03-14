@@ -52,12 +52,20 @@ namespace TheNeoGeoArchive.Persistence.Repositories.Dapper
             }
         }
 
-        public async Task<Game> GetGameById(Guid gameId)
+        public async Task<Game?> GetGameById(Guid gameId)
         {
             await using (var connection = _dbContext.NewConnection())
             {
                 await connection.OpenAsync();
-                return await connection.QuerySingleOrDefaultAsync<Game>(SelectQueryText, new { @id = gameId });
+                var result = await connection.QuerySingleOrDefaultAsync<GamesDto>(SelectOneQueryText, new { @id = gameId });
+                if (result is null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return NewGameFromDto(result);
+                }
             }
         }
 
@@ -108,10 +116,7 @@ namespace TheNeoGeoArchive.Persistence.Repositories.Dapper
 
         private const string SelectQueryText = @"SELECT * FROM games;";
 
-        private const string SelectOneQueryText = @"SELECT
-	            game_id as GameId, name, title, genre, modes, series, developer, publisher, year, release_mvs, release_aes, release_cd
-            FROM games
-            WHERE game_id = @id;";
+        private const string SelectOneQueryText = @"SELECT * FROM games WHERE game_id = @id;";
 
         private const string SelectByNameText = @"SELECT * FROM games WHERE name = @name;";
 

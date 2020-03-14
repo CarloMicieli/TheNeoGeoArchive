@@ -2,6 +2,7 @@ using System;
 using System.Text.Json;
 using AutoMapper;
 using FluentMigrator.Runner;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ using TheNeoGeoArchive.Infrastructure.Dapper.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Infrastructure.Migrations.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Persistence.Extensions.DependencyInjection;
 using TheNeoGeoArchive.WebApi.DependencyInjection;
+using TheNeoGeoArchive.WebApi.ViewModels.Validators;
 
 namespace TheNeoGeoArchive.WebApi
 {
@@ -34,7 +36,8 @@ namespace TheNeoGeoArchive.WebApi
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                });
+                })
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GameViewModelValidator>());
 
             services.AddOpenApi();
             services.AddVersioning();
@@ -45,13 +48,15 @@ namespace TheNeoGeoArchive.WebApi
 
             services.AddDapper(options =>
             {
-                options.UsePostgres(connectionString);
+                options.UseSqlite("Data Source=test.db");
+                //options.UsePostgres(connectionString);
                 options.ScanTypeHandlersIn(typeof(GuidTypeHandler).Assembly);
             });
 
             services.AddMigrations(options =>
             {
-                options.UsePostgres(connectionString);
+                options.UseSqlite("Data Source=test.db");
+                //options.UsePostgres(connectionString);
             });
 
             services.AddRepositories();

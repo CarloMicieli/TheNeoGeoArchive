@@ -6,6 +6,8 @@ using System;
 using TheNeoGeoArchive.Infrastructure.Dapper.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Infrastructure.Migrations.Extensions.DependencyInjection;
 using FluentMigrator.Runner;
+using TheNeoGeoArchive.IntegrationTests.SeedData;
+using TheNeoGeoArchive.Persistence.Repositories;
 
 namespace TheNeoGeoArchive.IntegrationTests
 {
@@ -44,6 +46,7 @@ namespace TheNeoGeoArchive.IntegrationTests
                     try
                     {
                         // Seed the database with test data.
+                        GamesSeedData.SeedGames(scopedServices.GetRequiredService<IGamesRepository>());
                     }
                     catch (Exception ex)
                     {
