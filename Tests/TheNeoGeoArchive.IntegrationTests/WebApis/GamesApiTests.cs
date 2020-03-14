@@ -74,7 +74,7 @@ namespace TheNeoGeoArchive.IntegrationTests.WebApis
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
-            var content = await ExtractContent<BadRequestResponse>(response);
+            var content = await AsBadRequest(response);
             content.Errors.Should().NotBeEmpty();
         }
 
@@ -127,14 +127,5 @@ namespace TheNeoGeoArchive.IntegrationTests.WebApis
         public DateTime? Mvs { set; get; }
         public DateTime? Aes { set; get; }
         public DateTime? Cd { set; get; }
-    }
-    
-    public sealed class BadRequestResponse
-    {
-        public string Type { set; get; }
-        public string Title { set; get; }
-        public int Status { set; get; }
-        public string TraceId { set; get; }
-        public Dictionary<string, List<string>> Errors { set; get; }
-    }
+    }    
 }

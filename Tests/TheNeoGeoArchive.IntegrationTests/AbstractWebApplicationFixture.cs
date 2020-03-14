@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
+using TheNeoGeoArchive.IntegrationTests.Responses;
 
 namespace TheNeoGeoArchive.IntegrationTests
 {
@@ -33,6 +34,16 @@ namespace TheNeoGeoArchive.IntegrationTests
             {
                 PropertyNameCaseInsensitive = true
             });
+        }
+
+        protected Task<ErrorResponse> AsError(HttpResponseMessage response)
+        {
+            return ExtractContent<ErrorResponse>(response);
+        }
+
+        protected Task<BadRequestResponse> AsBadRequest(HttpResponseMessage response)
+        {
+            return ExtractContent<BadRequestResponse>(response);
         }
     }
 }

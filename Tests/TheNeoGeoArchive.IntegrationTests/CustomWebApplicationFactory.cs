@@ -8,17 +8,32 @@ using TheNeoGeoArchive.Infrastructure.Migrations.Extensions.DependencyInjection;
 using FluentMigrator.Runner;
 using TheNeoGeoArchive.IntegrationTests.SeedData;
 using TheNeoGeoArchive.Persistence.Repositories;
+using System.IO;
 
 namespace TheNeoGeoArchive.IntegrationTests
 {
-    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup>
+#pragma warning disable CA1063 // Implement IDisposable Correctly
+    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup>, IDisposable
             where TStartup : class
     {
+        private readonly Guid contextId;
+
+        public CustomWebApplicationFactory()
+        {
+            this.contextId = Guid.NewGuid();
+        }
+
+        public new void Dispose()
+        {
+            File.Delete($"{contextId}.db");
+            base.Dispose();
+        }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                string connectionString = "Data Source=test.db";
+                string connectionString = $"Data Source={contextId}.db";
 
                 // Replace with sqlite
                 services.ReplaceDapper(options =>
@@ -41,12 +56,11 @@ namespace TheNeoGeoArchive.IntegrationTests
                     var runner = scopedServices.GetRequiredService<IMigrationRunner>();
                     runner.MigrateUp();
 
-                    Console.WriteLine(runner.GetType().ToString());
-
                     try
                     {
                         // Seed the database with test data.
                         GamesSeedData.SeedGames(scopedServices.GetRequiredService<IGamesRepository>());
+                        PlatformsSeedData.SeedPlatforms(scopedServices.GetRequiredService<IPlatformsRepository>());
                     }
                     catch (Exception ex)
                     {
@@ -57,4 +71,5 @@ namespace TheNeoGeoArchive.IntegrationTests
             });
         }
     }
+#pragma warning restore CA1063 // Implement IDisposable Correctly
 }
