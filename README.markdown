@@ -11,7 +11,7 @@ Filling the database using a bunch of csv files.
 Inside the `src/DataLoader` directory, just type
 
 ```
-$ dotnet run
+$ dotnet run -- --mode rest
 ```
 
 ## The web api
@@ -95,7 +95,7 @@ The main web api is for Neo Geo games:
     "media": "ROM cartridge",
     "cpu": "Motorola 68000 @ 12MHz, Zilog Z80A @ 4MHz",
     "memory": "64KB RAM, 84KB VRAM, 2KB Sound Memory",
-    "display": "320×224 resolution, 4096 on-screen colors out of a palette of 65536"
+    "display": "320ï¿½224 resolution, 4096 on-screen colors out of a palette of 65536"
 }
 ```
 
@@ -104,7 +104,45 @@ The main web api is for Neo Geo games:
 
 ## gRPC
 
-Todo
+```
+$ dotnet run --project Src/TheNeoGeoArchive.GrpcServices
+```
+
+To have a nice CLI tool, install [Evans](https://github.com/ktr0731/evans/releases).
+
+```
+$ evans repl Src/TheNeoGeoArchive.GrpcServices/Protos/games.proto 
+
+  ______
+ |  ____|
+ | |__    __   __   __ _   _ __    ___
+ |  __|   \ \ / /  / _. | | '_ \  / __|
+ | |____   \ V /  | (_| | | | | | \__ \
+ |______|   \_/    \__,_| |_| |_| |___/
+
+ more expressive universal gRPC client
+
+
+games.Games@127.0.0.1:50051>
+```
+
+```
+games.Games@127.0.0.1:50051> package games
+
+games.Games@127.0.0.1:50051> show api
++------------+-------------------+-----------------+
+|    RPC     |   REQUEST TYPE    |  RESPONSE TYPE  |
++------------+-------------------+-----------------+
+| CreateGame | CreateGameRequest | CreateGameReply |
++------------+-------------------+-----------------+
+```
+
+```
+games.Games@127.0.0.1:50051> service Games
+
+games.Games@127.0.0.1:50051> call CreateGame
+gameId (TYPE_STRING) => 
+```
 
 ## GraphQL
 

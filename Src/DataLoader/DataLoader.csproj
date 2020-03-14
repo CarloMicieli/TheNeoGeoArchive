@@ -8,6 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="15.0.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.27.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.27.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20158.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\games.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>
