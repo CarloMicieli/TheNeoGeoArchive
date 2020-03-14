@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheNeoGeoArchive.Persistence.Repositories;
 using TheNeoGeoArchive.WebApi.ViewModels;
@@ -19,6 +20,9 @@ namespace TheNeoGeoArchive.WebApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(GamesByGenreViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetGenres()
         {
             var genres = await _genresRepository.GetAllGenres();
@@ -38,6 +42,9 @@ namespace TheNeoGeoArchive.WebApi.Controllers
         }
 
         [HttpGet("{genre}")]
+        [ProducesResponseType(typeof(GamesByGenreViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetGamesByGenre(string genre)
         {
             var result = await _genresRepository.GetGamesByGenre(genre);
