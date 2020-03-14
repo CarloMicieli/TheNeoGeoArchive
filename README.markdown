@@ -51,7 +51,26 @@ The main web api is for Neo Geo games:
 - `GET https://localhost:5001/api/v1/games/:name`: return the game with the `:name` name
 - `GET https://localhost:5001/api/v1/games/id/:id`: return the game with the `:id` identifier
 
-- `POST api/games/:name/port`: to insert a new game port (to a different platform)
+- `GET https://localhost:5001/api/v1/genres`: returns all games by genre
+
+```javascript
+[
+    {
+        "genre": "Fighting, Sports",
+        "games": 
+        [
+            {
+                "gameId": "61fcaa73-f8be-4a86-8880-7fef64fb5908",
+                "name": "3countb",
+                "title": "3 Count Bout"
+            }
+        ]
+    }
+]
+```
+
+- `GET https://localhost:5001/api/v1/genres/:genre`: returns all games with the `:genre` genre
+
 
 ### Platforms
 

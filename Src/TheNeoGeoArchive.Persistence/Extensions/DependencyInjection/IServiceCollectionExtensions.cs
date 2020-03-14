@@ -10,6 +10,7 @@ namespace TheNeoGeoArchive.Persistence.Extensions.DependencyInjection
         {
             services.AddScoped<IGamesRepository, DapperGamesRepository>();
             services.AddScoped<IPlatformsRepository, DapperPlatformsRepository>();
+            services.AddScoped<IGenresRepository, DapperGenresRepository>();
             return services;
         }
     }
