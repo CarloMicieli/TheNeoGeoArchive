@@ -65,11 +65,15 @@ namespace TheNeoGeoArchive.WebApi
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error-local-development");
 
                 // Run database migration
                 var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
                 runner.MigrateUp();
+            }
+            else
+            {
+                app.UseExceptionHandler("/error");
             }
 
             app.UseHttpsRedirection();
