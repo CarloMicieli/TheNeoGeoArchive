@@ -1,8 +1,8 @@
 using AutoMapper;
 using TheNeoGeoArchive.Persistence.Domain;
-using TheNeoGeoArchive.WebApi.ViewModels;
+using TheNeoGeoArchive.WebApp.ViewModels;
 
-namespace TheNeoGeoArchive.WebApi
+namespace TheNeoGeoArchive.WebApp
 {
     public class AutoMapperProfile : Profile
     {

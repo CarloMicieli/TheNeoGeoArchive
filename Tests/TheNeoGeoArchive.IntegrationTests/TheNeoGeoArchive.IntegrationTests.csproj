@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\TheNeoGeoArchive.Infrastructure\TheNeoGeoArchive.Infrastructure.csproj" /> 
-    <ProjectReference Include="..\..\Src\TheNeoGeoArchive.WebApi\TheNeoGeoArchive.WebApi.csproj" />
+    <ProjectReference Include="..\..\Src\TheNeoGeoArchive.Infrastructure\TheNeoGeoArchive.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Src\TheNeoGeoArchive.WebApp\TheNeoGeoArchive.WebApp.csproj" />
   </ItemGroup>
 
 </Project>

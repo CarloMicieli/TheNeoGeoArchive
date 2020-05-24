@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TheNeoGeoArchive.WebApi.ViewModels
+namespace TheNeoGeoArchive.WebApp.ViewModels
 {
     public class GamesByGenreViewModel
     {

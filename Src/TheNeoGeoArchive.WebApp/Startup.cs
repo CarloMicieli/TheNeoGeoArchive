@@ -12,10 +12,11 @@ using Serilog;
 using TheNeoGeoArchive.Infrastructure.Dapper.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Infrastructure.Migrations.Extensions.DependencyInjection;
 using TheNeoGeoArchive.Persistence.Extensions.DependencyInjection;
-using TheNeoGeoArchive.WebApi.DependencyInjection;
-using TheNeoGeoArchive.WebApi.ViewModels.Validators;
+using TheNeoGeoArchive.WebApp.DependencyInjection;
+using TheNeoGeoArchive.WebApp.Services;
+using TheNeoGeoArchive.WebApp.ViewModels.Validators;
 
-namespace TheNeoGeoArchive.WebApi
+namespace TheNeoGeoArchive.WebApp
 {
     public class Startup
     {
@@ -31,6 +32,8 @@ namespace TheNeoGeoArchive.WebApi
             Log.Logger = new LoggerConfiguration()
                .ReadFrom.Configuration(Configuration)
                .CreateLogger();
+
+            services.AddGrpc();
 
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -87,6 +90,7 @@ namespace TheNeoGeoArchive.WebApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<GamesService>();
                 endpoints.MapControllers();
             });
         }

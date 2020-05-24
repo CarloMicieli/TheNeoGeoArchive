@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace TheNeoGeoArchive.WebApi.ViewModels.Validators
+namespace TheNeoGeoArchive.WebApp.ViewModels.Validators
 {
     public class GameViewModelValidator : AbstractValidator<GameViewModel>
     {

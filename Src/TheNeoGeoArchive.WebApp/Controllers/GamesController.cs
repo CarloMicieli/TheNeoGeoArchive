@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheNeoGeoArchive.Persistence.Domain;
 using TheNeoGeoArchive.Persistence.Repositories;
-using TheNeoGeoArchive.WebApi.ViewModels;
+using TheNeoGeoArchive.WebApp.ViewModels;
 
-namespace TheNeoGeoArchive.WebApi.Controllers
+namespace TheNeoGeoArchive.WebApp.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]

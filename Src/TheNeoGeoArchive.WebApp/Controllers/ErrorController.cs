@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using System;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
-namespace TheNeoGeoArchive.WebApi.Controllers
+namespace TheNeoGeoArchive.WebApp.Controllers
 {
     [ApiController]
     public class ErrorController : ControllerBase

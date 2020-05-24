@@ -7,6 +7,8 @@ namespace TheNeoGeoArchive.Infrastructure.Migrations
     {
         private const string Platforms = "platforms";
         private const string Games = "games";
+        private const string Characters = "characters";
+        private const string GamesCharacters = "games_characters";
 
         public override void Up()
         {
@@ -51,10 +53,27 @@ namespace TheNeoGeoArchive.Infrastructure.Migrations
                 .OnTable(Games)
                 .OnColumn("name")
                 .Unique();
+
+            Create.Table(Characters)
+                .WithColumn("character_id").AsGuid().PrimaryKey()
+                .WithColumn("name").AsString(50).NotNullable();
+
+            Create.Table(GamesCharacters)
+                .WithColumn("character_id").AsGuid().PrimaryKey()
+                .WithColumn("game_id").AsGuid().PrimaryKey();
+
+            Create.ForeignKey("Fk_GamesCharacters_Games")
+                .FromTable(GamesCharacters).ForeignColumn("game_id")
+                .ToTable(Games).PrimaryColumn("game_id");
+
+            Create.ForeignKey("Fk_GamesCharacters_Characters")
+                .FromTable(GamesCharacters).ForeignColumn("character_id")
+                .ToTable(Characters).PrimaryColumn("character_id");
         }
 
         public override void Down()
         {
+            Delete.Table(Characters);
             Delete.Table(Games);
             Delete.Table(Platforms);
         }

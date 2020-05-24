@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TheNeoGeoArchive.WebApi.ViewModels
+namespace TheNeoGeoArchive.WebApp.ViewModels
 {
     public class GameItemViewModel
     {

@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using TheNeoGeoArchive.WebApi.ViewModels.Validators;
+using TheNeoGeoArchive.WebApp.ViewModels.Validators;
 using Xunit;
 
 namespace TheNeoGeoArchive.ViewModels.Validators

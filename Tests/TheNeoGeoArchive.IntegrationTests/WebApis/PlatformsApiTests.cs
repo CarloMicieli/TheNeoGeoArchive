@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TheNeoGeoArchive.WebApi;
+using TheNeoGeoArchive.WebApp;
 using Xunit;
 
 namespace TheNeoGeoArchive.IntegrationTests.WebApis

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TheNeoGeoArchive.WebApi.DependencyInjection
+namespace TheNeoGeoArchive.WebApp.DependencyInjection
 {
     public static class VersioningExtensions
     {
